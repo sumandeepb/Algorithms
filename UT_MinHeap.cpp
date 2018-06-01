@@ -25,25 +25,19 @@
 
 using namespace std;
 
-int main(int argv, char *argc[]) {
-    /**/
-    
-    UT_findLastNodeSequence ();
-    UT_MinHeap();
-
-    return 0;
-}
-
-bool UT_findLastNodeSequence () {
+bool UT_findLastNodeSequence() {
     unsigned int count = 23;
     vector<int> lastNodeSeq;
 
     findLastNodeSequence(count, lastNodeSeq);
-    while(!lastNodeSeq.empty()) {
-            int nodeIdx = lastNodeSeq.back();
-            lastNodeSeq.pop_back();
-            cout << nodeIdx << endl;
+    while (!lastNodeSeq.empty()) {
+        int nodeIdx = lastNodeSeq.back();
+        lastNodeSeq.pop_back();
+        cout << nodeIdx << " ";
     }
+    cout << endl;
+
+    return true;
 }
 
 bool UT_MinHeap() {
@@ -55,4 +49,15 @@ bool UT_MinHeap() {
     }
 
     minHeap.preOrderTraverse();
+
+    return true;
+}
+
+int main(int argv, char *argc[]) {
+    /**/
+
+    UT_findLastNodeSequence();
+    UT_MinHeap();
+
+    return 0;
 }
