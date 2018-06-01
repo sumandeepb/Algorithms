@@ -13,29 +13,46 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
+
+/*
+ * Tree.hpp: UnitTest for MinHeap Class
+ */
+
+#include <iostream>
 
 #include "MinHeap.hpp"
 
+using namespace std;
+
 int main(int argv, char *argc[]) {
-	/*unsigned int count = (unsigned int) atoi(argc[1]);
-	vector<int> lastNodeSeq;
+    /**/
+    
+    UT_findLastNodeSequence ();
+    UT_MinHeap();
 
-	findLastNodeSequence(count, lastNodeSeq);
-	while(!lastNodeSeq.empty()) {
-		int nodeIdx = lastNodeSeq.back();
-		lastNodeSeq.pop_back();
-		cout << nodeIdx << endl;
-	}*/
+    return 0;
+}
 
-	MinHeap<int> minHeap;
+bool UT_findLastNodeSequence () {
+    unsigned int count = 23;
+    vector<int> lastNodeSeq;
 
-	int values[] = {55, 50, 90, 4, 87, 7, 2, 80};
-	for (int i = 0; i < 8; i++) {
-		minHeap.insert(values[i]);
-	}
+    findLastNodeSequence(count, lastNodeSeq);
+    while(!lastNodeSeq.empty()) {
+            int nodeIdx = lastNodeSeq.back();
+            lastNodeSeq.pop_back();
+            cout << nodeIdx << endl;
+    }
+}
 
-	minHeap.preOrderTraverse();
+bool UT_MinHeap() {
+    MinHeap<int> minHeap;
 
-	return 0;
+    int values[] = {55, 50, 90, 4, 87, 7, 2, 80};
+    for (int i = 0; i < 8; i++) {
+        minHeap.insert(values[i]);
+    }
+
+    minHeap.preOrderTraverse();
 }
