@@ -49,16 +49,26 @@ protected:
         }
     }
 
-    void heapify_down() { // used for extract
-
+    void heapify_down(TreeNode<T, 2>* node) { // used for extract
+        while (NULL != node) {
+            TreeNode<T, 2>* nodeChild = node->findMinChild();
+            if (NULL != nodeChild && node->data > nodeChild->data) {
+                std::swap(node->data, nodeChild->data);
+                node = nodeChild;
+            } else {
+                break;
+            }
+        }
     }
 
 public:
 
     void insert(T& data) {
-        if (NULL == BinaryTree<T>::root) {
+        if (BinaryTree<T>::isEmpty()) {
             BinaryTree<T>::root = new TreeNode<T, 2>;
+
             BinaryTree<T>::root->data = data;
+
             nodeCount = 1;
         } else {
             std::vector<int> lastNodeSeq;
@@ -93,7 +103,52 @@ public:
         }
     }
 
-    /*T extract() {
+    T extract() {
+        if (BinaryTree<T>::isEmpty()) {
+            throw "NULL BinaryTree!";
+        } else if (1 == nodeCount) { // just the root node
+            T data = BinaryTree<T>::root->data;
 
-    }*/
+            delete BinaryTree<T>::root;
+            BinaryTree<T>::root = NULL;
+
+            nodeCount = 0;
+            return data;
+        } else {
+            // root data is the minimum
+            T data = BinaryTree<T>::root->data;
+
+            std::vector<int> lastNodeSeq;
+            findLastNodeSequence(nodeCount, lastNodeSeq); // nodeCount gives location of last node
+
+            TreeNode<T, 2>* node = BinaryTree<T>::root;
+            while (lastNodeSeq.size() > 0) { // reach to the last node
+                int nodeIdx = lastNodeSeq.back();
+                node = node->child[nodeIdx];
+                lastNodeSeq.pop_back();
+            }
+
+            TreeNode<T, 2>* nodeParent = node->parent;
+
+            // check if node is left or right child of parent, remove node from tree
+            if (node == nodeParent->child[0]) {
+                nodeParent->child[0] = NULL;
+            } else if (node == nodeParent->child[1]) {
+                nodeParent->child[1] = NULL;
+            }
+
+            // update count
+            nodeCount--;
+
+            // set data
+            BinaryTree<T>::root->data = node->data;
+            // maintain heap order
+            heapify_down(BinaryTree<T>::root);
+
+            // clear memory
+            delete node;
+
+            return data;
+        }
+    }
 };

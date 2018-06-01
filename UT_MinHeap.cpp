@@ -49,6 +49,13 @@ bool UT_MinHeap() {
     }
 
     minHeap.preOrderTraverse();
+    
+    while (!minHeap.isEmpty()) {
+        int d = minHeap.extract();
+        cout << d << " ";
+        //minHeap.preOrderTraverse();
+    }
+    cout << endl;
 
     return true;
 }

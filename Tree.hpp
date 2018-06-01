@@ -33,4 +33,18 @@ public:
         this->parent = NULL;
         memset(child, 0, N * sizeof (TreeNode<T, N>*));
     }
+
+    TreeNode<T, N>* findMinChild() {
+        TreeNode<T, N>* minChild = child[0];
+
+        if (NULL != minChild) {
+            for (int i = 1; i < N; i++) {
+                if (NULL != child[i] && child[i]->data < minChild->data) {
+                    minChild = child[i];
+                }
+            }
+        }
+
+        return minChild;
+    }
 };

@@ -35,6 +35,10 @@ public:
         root = NULL;
     }
 
+    bool isEmpty() {
+        return (NULL == root);
+    }
+    
     void preOrderTraverse() {
         std::cout << "Pre-Order: ";
         preOrderPrint(root);
