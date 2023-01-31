@@ -16,7 +16,7 @@
  */
 
 /*
- * File:   KaratsubaMult.cpp
+ * File:   FindSecondLargest.cpp
  * Author: sumandeep
  *
  * Created on 26 January, 2023
@@ -63,7 +63,6 @@ int FindSecondMax(const vector<int> &aNumbers) {
 
 int main(int argc, char *argv[]) {
     vector<int> a{1, 3, 5, 2, 4, 6, 8, 7};
-    vector<int> b{1};
 
     // cout << "max: " << FindMaxByKnockout(0, a.size() - 1, a)[0] << endl;
     cout << "2nd max: " << FindSecondMax(a) << endl;
