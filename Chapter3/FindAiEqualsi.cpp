@@ -17,7 +17,7 @@
 
 /* 
  * File:   FindAiEqualsi.cpp
- * Author: sumandeep
+ * Author: sumandeepb
  *
  * Created on 12 April, 2020, 3:39 AM
  */

@@ -17,7 +17,7 @@
 
 /* 
  * File:   FindUnimodalMax.cpp
- * Author: sumandeep
+ * Author: sumandeepb
  *
  * Created on 11 April, 2020, 1:26 PM
  */

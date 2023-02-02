@@ -17,7 +17,7 @@
 
 /*
  * File:   FindSecondLargest.cpp
- * Author: sumandeep
+ * Author: sumandeepb
  *
  * Created on 26 January, 2023
  */

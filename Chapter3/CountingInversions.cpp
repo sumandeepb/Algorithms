@@ -17,7 +17,7 @@
 
 /* 
  * File:   CountingInversions.cpp
- * Author: sumandeep
+ * Author: sumandeepb
  *
  * Created on 12 April, 2020, 6:41 PM
  */
