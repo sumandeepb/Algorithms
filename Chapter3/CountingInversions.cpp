@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 
+/*
  * File:   CountingInversions.cpp
  * Author: sumandeepb
  *
@@ -25,55 +25,61 @@
 #include <iostream>
 #include <vector>
 
+#define _DEBUG 0
+
 using namespace std;
 
-int MergeAndCountSplitInv(vector<int> &data, int low, int high)
-{
+int MergeAndCountSplitInv(vector<int> &data, int low, int high) {
     vector<int>::const_iterator first = data.begin() + low;
     vector<int>::const_iterator last = data.begin() + high + 1;
     vector<int> buffer(first, last);
     int mid = (buffer.size() - 1) / 2;
 
+#if _DEBUG
     cout << "M> low " << low << ", mid " << mid << ", high " << high << endl;
-    for (int i = 0; i < buffer.size(); i++)
-    {
+    for (int i = 0; i < buffer.size(); i++) {
         cout << buffer[i] << ", ";
     }
     cout << endl;
+#endif
 
     int i = 0;       // goes from 0 to mid
     int j = mid + 1; // goes from mid + 1 to buffer.size() - 1
     int splitInv = 0;
-    for (int k = low; k <= high; k++)
-    {
+    for (int k = low; k <= high; k++) {
+#if _DEBUG
         cout << "k = " << k << ", ";
-        if ((j > (buffer.size() - 1) || buffer[i] < buffer[j]) && i <= mid)
-        {
+#endif
+        if ((j > (buffer.size() - 1) || buffer[i] < buffer[j]) && i <= mid) {
             data[k] = buffer[i];
+#if _DEBUG
             cout << "pick from i " << i << ":" << buffer[i];
+#endif
             i++;
-        }
-        else if ((i > mid || buffer[i] >= buffer[j]) && j <= (buffer.size() - 1))
-        {
+        } else if ((i > mid || buffer[i] >= buffer[j]) && j <= (buffer.size() - 1)) {
             data[k] = buffer[j];
+#if _DEBUG
             cout << "pick from j " << j << ":" << buffer[j];
+#endif
             j++;
             splitInv += mid - i + 1;
         }
+#if _DEBUG
         cout << endl;
+#endif
     }
 
     return splitInv;
 }
 
-int SortAndCountInv(vector<int> &data, int low, int high)
-{
+int SortAndCountInv(vector<int> &data, int low, int high) {
     int n = high - low + 1;
     int mid = (low + high) / 2;
+#if _DEBUG
     cout << "S> low " << low << ", mid " << mid << ", high " << high << endl;
+#endif
 
-    if (n <= 1)
-    {
+    if (n <= 1) {
         return 0;
     }
 
@@ -84,20 +90,19 @@ int SortAndCountInv(vector<int> &data, int low, int high)
     return leftInv + rightInv + splitInv;
 }
 
-int main(int argc, char *argv[])
-{
-    vector<int> a{1, 3, 5, 2, 4, 6};
-    //vector<int> a{1, 2, 3, 4, 5, 6, 7, 8};
-    //vector<int> a{8, 7, 6, 5, 4, 3, 2, 1};
+int main(int argc, char *argv[]) {
+    // vector<int> a{1, 3, 5, 2, 4, 6};
+    // vector<int> a{1, 2, 3, 4, 5, 6, 7, 8};
+    vector<int> a{8, 7, 6, 5, 4, 3, 2, 1};
 
-    int max = SortAndCountInv(a, 0, a.size() - 1);
-    cout << "Result is " << max << endl;
-    for (int i = 0; i < a.size(); i++)
-    {
+    int nInversions = SortAndCountInv(a, 0, a.size() - 1);
+    cout << "Number of inversions: " << nInversions << endl;
+#if _DEBUG
+    for (int i = 0; i < a.size(); i++) {
         cout << a[i] << ", ";
     }
-
     cout << endl;
+#endif
 
     return 0;
 }
