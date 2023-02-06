@@ -22,6 +22,7 @@
  * Created on 12 April, 2020, 6:41 PM
  */
 
+#include <fstream>
 #include <iostream>
 #include <vector>
 
@@ -29,7 +30,7 @@
 
 using namespace std;
 
-int MergeAndCountSplitInv(vector<int> &data, int low, int high) {
+unsigned int MergeAndCountSplitInv(vector<int> &data, int low, int high) {
     vector<int>::const_iterator first = data.begin() + low;
     vector<int>::const_iterator last = data.begin() + high + 1;
     vector<int> buffer(first, last);
@@ -45,7 +46,7 @@ int MergeAndCountSplitInv(vector<int> &data, int low, int high) {
 
     int i = 0;       // goes from 0 to mid
     int j = mid + 1; // goes from mid + 1 to buffer.size() - 1
-    int splitInv = 0;
+    unsigned int splitInv = 0;
     for (int k = low; k <= high; k++) {
 #if _DEBUG
         cout << "k = " << k << ", ";
@@ -62,7 +63,7 @@ int MergeAndCountSplitInv(vector<int> &data, int low, int high) {
             cout << "pick from j " << j << ":" << buffer[j];
 #endif
             j++;
-            splitInv += mid - i + 1;
+            splitInv += (unsigned int)(mid - i + 1);
         }
 #if _DEBUG
         cout << endl;
@@ -72,7 +73,7 @@ int MergeAndCountSplitInv(vector<int> &data, int low, int high) {
     return splitInv;
 }
 
-int SortAndCountInv(vector<int> &data, int low, int high) {
+unsigned int SortAndCountInv(vector<int> &data, int low, int high) {
     int n = high - low + 1;
     int mid = (low + high) / 2;
 #if _DEBUG
@@ -83,19 +84,43 @@ int SortAndCountInv(vector<int> &data, int low, int high) {
         return 0;
     }
 
-    int leftInv = SortAndCountInv(data, low, mid);
-    int rightInv = SortAndCountInv(data, mid + 1, high);
-    int splitInv = MergeAndCountSplitInv(data, low, high);
+    unsigned int leftInv = SortAndCountInv(data, low, mid);
+    unsigned int rightInv = SortAndCountInv(data, mid + 1, high);
+    unsigned int splitInv = MergeAndCountSplitInv(data, low, high);
 
     return leftInv + rightInv + splitInv;
 }
 
+void loadData(const string strFileName, vector<int> &data) {
+    ifstream file(strFileName);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("couldn't open file");
+    }
+
+    while (!file.eof()) {
+        int input;
+        file >> input;
+        data.push_back(input);
+    }
+    cout << "Loaded: " << data.size() << endl;
+    file.close();
+}
+
 int main(int argc, char *argv[]) {
+#if _DEBUG
     // vector<int> a{1, 3, 5, 2, 4, 6};
     // vector<int> a{1, 2, 3, 4, 5, 6, 7, 8};
     vector<int> a{8, 7, 6, 5, 4, 3, 2, 1};
+#else
+    if (argc < 2) {
+        throw std::invalid_argument("missing input filename");
+    }
+    vector<int> a;
+    loadData(argv[1], a);
+#endif
 
-    int nInversions = SortAndCountInv(a, 0, a.size() - 1);
+    unsigned int nInversions = SortAndCountInv(a, 0, a.size() - 1);
     cout << "Number of inversions: " << nInversions << endl;
 #if _DEBUG
     for (int i = 0; i < a.size(); i++) {
